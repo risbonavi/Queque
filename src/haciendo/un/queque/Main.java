@@ -73,8 +73,53 @@ public class Main {
 		//2. fitness con el modelo matematico
 		System.out.println("fitness padre " +fitness(vPadre));
 		System.out.println("fitness madre " +fitness(vMadre));
-		 
+		
+		//3. cruzamiento
+		
+		cruzamiento(vPadre,vMadre);
+		
+		
 	
+	}
+
+	private static void cruzamiento(float[] vPadre, float[] vMadre) {
+		int largoPadre=vPadre.length;
+		int largoMadre=vMadre.length;
+		
+		float[] vHijo1= new float[largoPadre];
+		float[] vHijo2= new float[largoMadre];
+				
+		int mitadPadre=largoPadre/2;
+		int mitadMadre=largoMadre/2;
+		
+		for(int i=0;i<mitadPadre;i++){
+			vHijo1[i]=vPadre[i];
+		}
+		for(int i=mitadPadre;i<largoPadre;i++){
+			vHijo2[i]=vPadre[i];
+		}
+		
+		for(int i=0;i<mitadMadre;i++){
+			vHijo2[i]=vMadre[i];
+		}
+		for(int i=mitadMadre;i<largoMadre;i++){
+			vHijo1[i]=vMadre[i];
+		}
+		
+		System.out.print("hijo 1: ");
+		for(int i=0;i<vHijo1.length;i++){
+			System.out.print(""+vHijo1[i]+", ");
+		}
+		System.out.println("");
+		
+		System.out.print("hijo 2: ");
+		for(int i=0;i<vHijo2.length;i++){
+			System.out.print(""+vHijo2[i]+", ");
+		}
+		System.out.println("");
+		
+		
+		
 	}
 
 	private static double fitness(float[] v) {
@@ -98,7 +143,8 @@ public class Main {
 			}
 		return total;
 	}
-
+	
+	
 
 
 }
