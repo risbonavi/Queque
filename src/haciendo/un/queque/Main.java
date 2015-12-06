@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Main {
 
-	/*
+	 /*
 	1.	Comenzar con una población inicial, la cual puede ser generada de manera aleatoria.
 	2.	Calcular el fitness (aptitud) de cada individuo.
 	3.	Aplicar el operador de selección con base en el fitness de la población.
@@ -12,6 +12,10 @@ public class Main {
 	5.	Ir al paso 2 hasta que la condición de parada se satisfaga.
 	6.	Cuando se cumple la condición de parada, se devuelve al mejor individuo encontrado (bien el mejor de todas las generaciones, bien el mejor de la última generación).
 	*/
+	
+	static float[] vHijo1;
+	static float[] vHijo2;
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//1.poblacion inicial
@@ -75,9 +79,11 @@ public class Main {
 		System.out.println("fitness madre " +fitness(vMadre));
 		
 		//3. cruzamiento
-		
 		cruzamiento(vPadre,vMadre);
 		
+		//4.
+		System.out.println("fitness hijo1: " +fitness(vHijo1));
+		System.out.println("fitness hijo2: " +fitness(vHijo2));
 		
 	
 	}
@@ -86,8 +92,8 @@ public class Main {
 		int largoPadre=vPadre.length;
 		int largoMadre=vMadre.length;
 		
-		float[] vHijo1= new float[largoPadre];
-		float[] vHijo2= new float[largoMadre];
+		vHijo1= new float[largoPadre];
+		vHijo2= new float[largoMadre];
 				
 		int mitadPadre=largoPadre/2;
 		int mitadMadre=largoMadre/2;
