@@ -20,30 +20,30 @@ public class Main {
 		// TODO Auto-generated method stub
 		//1.poblacion inicial
 
-		//(int) (rnd.nextDouble() * cantidad_números_rango + término_inicial_rango)
+		//(int) (rnd.nextFloat() * cantidad_números_rango + término_inicial_rango)
 		
 		float x1,x3,x10=(float) 0.0;
 		int x2,x4,x5,x6,x7,x8,x9=0;
 		Random  rnd = new Random();
 		
 		//exp cocinero
-		x1=(float) (rnd.nextDouble() *1 + 0.2);
+		x1=(float) (rnd.nextFloat() *1 + 0.2);
 		//tamaño queque
-		x2=(int) (rnd.nextDouble() * 350 + 350);
+		x2=(int) (rnd.nextFloat() * 350 + 350);
 		//proporcion Ingredientes
-		x3=(float) (rnd.nextDouble() *1 + 0.1);
+		x3=(float) (rnd.nextFloat() *1 + 0.1);
 		//Tiempo Mezcla
-		x4=(int) (rnd.nextDouble() * 14 + 1);
+		x4=(int) (rnd.nextFloat() * 14 + 1);
 		//tiempo Batido
-		x5=(int) (rnd.nextDouble() * 14 + 1);
+		x5=(int) (rnd.nextFloat() * 14 + 1);
 		//Temp Horno
-		x6=(int) (rnd.nextDouble() * 55 + 140);
+		x6=(int) (rnd.nextFloat() * 55 + 140);
 		//Tiempo Precalentado del horno
-		x7=(int) (rnd.nextDouble() * 18 + 21);		
+		x7=(int) (rnd.nextFloat() * 18 + 21);		
 		//Tiempo de coccion
-		x8=(int) (rnd.nextDouble() * 12 + 14);
+		x8=(int) (rnd.nextFloat() * 12 + 14);
 		//tiempo enfriamiento
-		x9=(int) (rnd.nextDouble() * 13 + 21);
+		x9=(int) (rnd.nextFloat() * 13 + 21);
 		
 		System.out.println("Padre x1: "+x1+" ,x2:"+x2+" ,x3:"+x3+" ,x4:"+x4+" ,x5:"+x5
 					  +  " ,x6:"+x6+" ,x7:"+x7+" ,x8:"+x8+" ,x9:"+x9);
@@ -51,23 +51,23 @@ public class Main {
 		float vPadre[]={x1,x2,x3,x4,x5,x6,x7,x8,x9};
 		
 		//exp cocinero
-		x1=(float) (rnd.nextDouble() *1 + 0.2);
+		x1=(float) (rnd.nextFloat() *1 + 0.2);
 		//tamaño queque
-		x2=(int) (rnd.nextDouble() * 350 + 350);
+		x2=(int) (rnd.nextFloat() * 350 + 350);
 		//proporcion Ingredientes
-		x3=(float) (rnd.nextDouble() *1 + 0.1);
+		x3=(float) (rnd.nextFloat() *1 + 0.1);
 		//Tiempo Mezcla
-		x4=(int) (rnd.nextDouble() * 14 + 1);
+		x4=(int) (rnd.nextFloat() * 14 + 1);
 		//tiempo Batido
-		x5=(int) (rnd.nextDouble() * 14 + 1);
+		x5=(int) (rnd.nextFloat() * 14 + 1);
 		//Temp Horno
-		x6=(int) (rnd.nextDouble() * 55 + 140);
+		x6=(int) (rnd.nextFloat() * 55 + 140);
 		//Tiempo Precalentado del horno
-		x7=(int) (rnd.nextDouble() * 18 + 21);		
+		x7=(int) (rnd.nextFloat() * 18 + 21);		
 		//Tiempo de coccion
-		x8=(int) (rnd.nextDouble() * 12 + 14);
+		x8=(int) (rnd.nextFloat() * 12 + 14);
 		//tiempo enfriamiento
-		x9=(int) (rnd.nextDouble() * 13 + 21);
+		x9=(int) (rnd.nextFloat() * 13 + 21);
 		
 		float vMadre[]={x1,x2,x3,x4,x5,x6,x7,x8,x9};
 		
@@ -81,11 +81,28 @@ public class Main {
 		//3. cruzamiento
 		cruzamiento(vPadre,vMadre);
 		
-		//4.
+		//4.fitness hijos
 		System.out.println("fitness hijo1: " +fitness(vHijo1));
 		System.out.println("fitness hijo2: " +fitness(vHijo2));
 		
+		mutando(vHijo1);
 	
+	}
+
+	private static void mutando(float[] vHijo) {
+		Random  rnd = new Random();
+		int gen =(int) (rnd.nextFloat() * 9 + 0);
+		System.out.println(gen);
+		int mutacion =rnd.nextInt(111);
+		System.out.println(mutacion);
+		
+		vHijo[gen]=mutacion;
+		
+		System.out.print("hijo mutado: ");
+		for(int i=0;i<vHijo.length;i++){
+			System.out.print("x"+(i+1)+": "+vHijo[i]+", ");
+		}
+		System.out.println("");
 	}
 
 	private static void cruzamiento(float[] vPadre, float[] vMadre) {
@@ -114,13 +131,13 @@ public class Main {
 		
 		System.out.print("hijo 1: ");
 		for(int i=0;i<vHijo1.length;i++){
-			System.out.print(""+vHijo1[i]+", ");
+			System.out.print("x"+(i+1)+": "+vHijo1[i]+", ");
 		}
 		System.out.println("");
 		
 		System.out.print("hijo 2: ");
 		for(int i=0;i<vHijo2.length;i++){
-			System.out.print(""+vHijo2[i]+", ");
+			System.out.print("x"+(i+1)+": "+vHijo2[i]+", ");
 		}
 		System.out.println("");
 		
