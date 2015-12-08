@@ -1,17 +1,15 @@
 package haciendo.un.queque;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Main {
-
-	 /*
-	1.	Comenzar con una población inicial, la cual puede ser generada de manera aleatoria.
-	2.	Calcular el fitness (aptitud) de cada individuo.
-	3.	Aplicar el operador de selección con base en el fitness de la población.
-	4.	Aplicar los operadores genéticos de reproducción, cruce y mutación a la población actual para generar a la población de la siguiente generación.
-	5.	Ir al paso 2 hasta que la condición de parada se satisfaga.
-	6.	Cuando se cumple la condición de parada, se devuelve al mejor individuo encontrado (bien el mejor de todas las generaciones, bien el mejor de la última generación).
-	*/
+	
+	static ArrayList<float[]> PoblacionInicial = new ArrayList<float[]>();
+	static ArrayList<float[]> PoblacionGeneraciones= new ArrayList<float[]>();
+	
+	static ArrayList<float[]> PoblacionGeneracionesConSeleccion= new ArrayList<float[]>();
 	
 	static float[] vHijo1;
 	static float[] vHijo2;
@@ -20,92 +18,116 @@ public class Main {
 		// TODO Auto-generated method stub
 		//1.poblacion inicial
 
-		//(int) (rnd.nextFloat() * cantidad_números_rango + término_inicial_rango)
-		
 		float x1,x3,x10=(float) 0.0;
 		int x2,x4,x5,x6,x7,x8,x9=0;
-		Random  rnd = new Random();
 		
-		//exp cocinero
-		x1=(float) (rnd.nextFloat() *1 + 0.2);
-		//tamaño queque
-		x2=(int) (rnd.nextFloat() * 350 + 350);
-		//proporcion Ingredientes
-		x3=(float) (rnd.nextFloat() *1 + 0.1);
-		//Tiempo Mezcla
-		x4=(int) (rnd.nextFloat() * 14 + 1);
-		//tiempo Batido
-		x5=(int) (rnd.nextFloat() * 14 + 1);
-		//Temp Horno
-		x6=(int) (rnd.nextFloat() * 55 + 140);
-		//Tiempo Precalentado del horno
-		x7=(int) (rnd.nextFloat() * 18 + 21);		
-		//Tiempo de coccion
-		x8=(int) (rnd.nextFloat() * 12 + 14);
-		//tiempo enfriamiento
-		x9=(int) (rnd.nextFloat() * 13 + 21);
 		
-		System.out.println("Padre x1: "+x1+" ,x2:"+x2+" ,x3:"+x3+" ,x4:"+x4+" ,x5:"+x5
+		
+		for(int i=0;i<1000;i++){
+			Random  rnd = new Random();
+			
+			//exp cocinero
+			x1=(float) (rnd.nextFloat() *0.8 + 0.2);
+			//tamaño queque
+			x2=(int) (rnd.nextFloat() * 350 + 350);
+			//proporcion Ingredientes
+			x3=(float) (rnd.nextFloat() *0.9 + 0.1);
+			//Tiempo Mezcla
+			x4=(int) (rnd.nextFloat() * 14 + 1);
+			//tiempo Batido
+			x5=(int) (rnd.nextFloat() * 14 + 1);
+			//Temp Horno
+			x6=(int) (rnd.nextFloat() * 55 + 140);
+			//Tiempo Precalentado del horno
+			x7=(int) (rnd.nextFloat() * 18 + 21);		
+			//Tiempo de coccion
+			x8=(int) (rnd.nextFloat() * 12 + 14);
+			//tiempo enfriamiento
+			x9=(int) (rnd.nextFloat() * 13 + 21);
+			System.out.println("Padre x"+(i+1)+": "+x1+" ,x2:"+x2+" ,x3:"+x3+" ,x4:"+x4+" ,x5:"+x5
 					  +  " ,x6:"+x6+" ,x7:"+x7+" ,x8:"+x8+" ,x9:"+x9);
 		
-		float vPadre[]={x1,x2,x3,x4,x5,x6,x7,x8,x9};
+			float vPadre[]={x1,x2,x3,x4,x5,x6,x7,x8,x9};
+			PoblacionInicial.add(vPadre);
+		}
 		
-		//exp cocinero
-		x1=(float) (rnd.nextFloat() *1 + 0.2);
-		//tamaño queque
-		x2=(int) (rnd.nextFloat() * 350 + 350);
-		//proporcion Ingredientes
-		x3=(float) (rnd.nextFloat() *1 + 0.1);
-		//Tiempo Mezcla
-		x4=(int) (rnd.nextFloat() * 14 + 1);
-		//tiempo Batido
-		x5=(int) (rnd.nextFloat() * 14 + 1);
-		//Temp Horno
-		x6=(int) (rnd.nextFloat() * 55 + 140);
-		//Tiempo Precalentado del horno
-		x7=(int) (rnd.nextFloat() * 18 + 21);		
-		//Tiempo de coccion
-		x8=(int) (rnd.nextFloat() * 12 + 14);
-		//tiempo enfriamiento
-		x9=(int) (rnd.nextFloat() * 13 + 21);
+		//cruzamiento de los padres... resultado padres e hijos
+		for(int m=0;m<PoblacionInicial.size();m++){
+			for(int l=0;l<PoblacionInicial.size();l++){
+				//cruzamos solo los padres q son diferentes
+				if(m<=l && m!=l){
+					PoblacionGeneraciones.add(PoblacionInicial.get(m));
+					PoblacionGeneraciones.add(PoblacionInicial.get(l));
+				
+					PoblacionGeneraciones.addAll(cruzamiento(PoblacionInicial.get(m), PoblacionInicial.get(l)));
+				}
+			}	
+		}
 		
-		float vMadre[]={x1,x2,x3,x4,x5,x6,x7,x8,x9};
+		System.out.println("Tamaño Poblacion Generaciones: "+PoblacionGeneraciones.size());
 		
-		System.out.println("Madre x1: "+x1+" ,x2:"+x2+" ,x3:"+x3+" ,x4:"+x4+" ,x5:"+x5
-				  +  " ,x6:"+x6+" ,x7:"+x7+" ,x8:"+x8+" ,x9:"+x9);
+		//seleccion natural
 		
-		//2. fitness con el modelo matematico
-		System.out.println("fitness padre " +fitness(vPadre));
-		System.out.println("fitness madre " +fitness(vMadre));
+		Iterator<float[]> nombreIterator = PoblacionGeneraciones.iterator();
+		int nIterator=0;
+		double fitnessAceptableAbajo=12012*0.70;
+		double fitnessAceptableArriba=12012*1.30;
+		Random  rnd = new Random();
 		
-		//3. cruzamiento
-		cruzamiento(vPadre,vMadre);
+		while(nombreIterator.hasNext()){
+			float[] elemento = nombreIterator.next();
+			
+			double fitness = fitness(elemento);
+			if(fitness>fitnessAceptableAbajo && fitness<fitnessAceptableArriba){
+				
+				boolean dadoBinario=rnd.nextBoolean();
+				if(dadoBinario){
+					PoblacionGeneracionesConSeleccion.add(elemento);
+				}
+			}
+			nIterator++;
+		}
 		
-		//4.fitness hijos
-		System.out.println("fitness hijo1: " +fitness(vHijo1));
-		System.out.println("fitness hijo2: " +fitness(vHijo2));
+		System.out.println("Tamaño Poblacion Generaciones con Seleccion: "+PoblacionGeneracionesConSeleccion.size());
 		
-		mutando(vHijo1);
-	
+		//Buscando el optimo
+		Iterator<float[]> pobGenConSeleccion = PoblacionGeneracionesConSeleccion.iterator();
+		int nn=1;
+		while(pobGenConSeleccion.hasNext()){
+			float[] e = pobGenConSeleccion.next();
+			double fitness = fitness(e);
+			if(fitness>=12012*0.99 && fitness<=12012*1.01){
+				//if(fitness)
+				System.out.println(e[0]+"-"+e[1]+"-"+e[2]+"-"+e[3]+"-"+e[4]+"-"+e[5]
+						      +"-"+e[6]+"-"+e[7]+"-"+e[8]+"-"+"fitneess: "+fitness);
+				
+				nn++;
+			}
+			
+		}
+		
+		
 	}
 
-	private static void mutando(float[] vHijo) {
+	float[] mutando(float[] vHijo) {
+		float[] mutado=null;
+		
 		Random  rnd = new Random();
 		int gen =(int) (rnd.nextFloat() * 9 + 0);
 		System.out.println(gen);
-		int mutacion =rnd.nextInt(111);
-		System.out.println(mutacion);
 		
+		int mutacion =rnd.nextInt(111);
 		vHijo[gen]=mutacion;
 		
-		System.out.print("hijo mutado: ");
-		for(int i=0;i<vHijo.length;i++){
-			System.out.print("x"+(i+1)+": "+vHijo[i]+", ");
-		}
-		System.out.println("");
+		mutado=vHijo;
+		
+		return mutado;
 	}
 
-	private static void cruzamiento(float[] vPadre, float[] vMadre) {
+	static ArrayList<float[]> cruzamiento(float[] vPadre, float[] vMadre) {
+		
+		ArrayList<float[]> cruza = new ArrayList<float[]>();
+		
 		int largoPadre=vPadre.length;
 		int largoMadre=vMadre.length;
 		
@@ -129,19 +151,12 @@ public class Main {
 			vHijo1[i]=vMadre[i];
 		}
 		
-		System.out.print("hijo 1: ");
-		for(int i=0;i<vHijo1.length;i++){
-			System.out.print("x"+(i+1)+": "+vHijo1[i]+", ");
-		}
-		System.out.println("");
 		
-		System.out.print("hijo 2: ");
-		for(int i=0;i<vHijo2.length;i++){
-			System.out.print("x"+(i+1)+": "+vHijo2[i]+", ");
-		}
-		System.out.println("");
+		cruza.add(vHijo1);
+		cruza.add(vHijo2);
 		
 		
+		return cruza;
 		
 	}
 
