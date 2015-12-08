@@ -90,31 +90,47 @@ public class Main {
 		
 		System.out.println("Tamaño Poblacion Generaciones con Seleccion: "+PoblacionGeneracionesConSeleccion.size());
 		
-		//Buscando el optimo
-		Iterator<float[]> pobGenConSeleccion = PoblacionGeneracionesConSeleccion.iterator();
-		int nn=1;
-		while(pobGenConSeleccion.hasNext()){
-			float[] e = pobGenConSeleccion.next();
-			double fitness = fitness(e);
-			if(fitness>=12012*0.99 && fitness<=12012*1.01){
-				//if(fitness)
-				System.out.println(e[0]+"-"+e[1]+"-"+e[2]+"-"+e[3]+"-"+e[4]+"-"+e[5]
-						      +"-"+e[6]+"-"+e[7]+"-"+e[8]+"-"+"fitneess: "+fitness);
-				
-				nn++;
-			}
-			
+		//Mutando aleatoriamente
+		//Iterator<float[]> pobGenConSeleccionMutacion = PoblacionGeneracionesConSeleccion.iterator();
+		//while(pobGenConSeleccionMutacion.hasNext()){
+		int cont=0;
+		while(cont<1000){
+			Random  rndx = new Random();
+				if(rndx.nextBoolean()){
+					int index= (int) (rndx.nextFloat() *PoblacionGeneracionesConSeleccion.size() + 0);
+					float [] mutar = PoblacionGeneracionesConSeleccion.get(index);
+					PoblacionGeneracionesConSeleccion.remove(index);
+					PoblacionGeneracionesConSeleccion.add(mutando(mutar));
+				}
+			cont++;
 		}
+		
+		//Buscando el optimo
+				Iterator<float[]> pobGenConSeleccion = PoblacionGeneracionesConSeleccion.iterator();
+				int nn=1;
+				while(pobGenConSeleccion.hasNext()){
+					float[] e = pobGenConSeleccion.next();
+					double fitness = fitness(e);
+					if(fitness>=12012*0.999 && fitness<=12012*1.001){
+						//if(fitness)
+						System.out.println("queque "+nn+" ["+e[0]+"-"+e[1]+"-"+e[2]+"-"+e[3]+"-"+e[4]+"-"+e[5]
+								      +"-"+e[6]+"-"+e[7]+"-"+e[8]+"]"+" fitneess: "+fitness);
+						
+						nn++;
+						//break;
+					}
+					
+				}
 		
 		
 	}
 
-	float[] mutando(float[] vHijo) {
+	static float[] mutando(float[] vHijo) {
 		float[] mutado=null;
 		
 		Random  rnd = new Random();
-		int gen =(int) (rnd.nextFloat() * 9 + 0);
-		System.out.println(gen);
+		int gen =(int) (rnd.nextFloat() * 8 + 0);
+		//System.out.println(gen);
 		
 		int mutacion =rnd.nextInt(111);
 		vHijo[gen]=mutacion;
